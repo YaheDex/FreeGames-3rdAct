@@ -11,6 +11,7 @@ Exercises
 
 from random import choice
 from turtle import *
+import math
 
 from freegames import floor, vector
 
@@ -50,6 +51,8 @@ tiles = [
 ]
 # fmt: on
 
+def distance(v1, v2):
+    return math.sqrt((v2.x - v1.x)**2 + (v2.y - v1.y)**2)
 
 def square(x, y):
     """Draw square using path at (x, y)."""
@@ -148,9 +151,19 @@ def move():
                 vector(0, 5),
                 vector(0, -5),
             ]
-            plan = choice(options)
-            course.x = plan.x
-            course.y = plan.y
+            # plan = choice(options)
+            # print(pacman.x, pacman.y, "|", point + plan)
+            best = vector(1000,1000)
+            for i in range(len(options)):
+                print(point + options[i], pacman)
+                if (distance(point + options[i], pacman) < distance(point + best, pacman)) and valid(point + options[i]):
+                    best = options[i]
+            print(best)
+            
+            print("-----------------------")
+            
+            course.x = best.x
+            course.y = best.y
             """
             NOTA: 
             ACÁ SÓLO SE SELECCIONA LA DIRECCIÓN, NO SE CAMBIA LA POSICIÓN, ESO SE HACE EN LA SIGUIENTE ITERACIÓN
