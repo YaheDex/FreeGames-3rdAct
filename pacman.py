@@ -11,6 +11,7 @@ Exercises
 
 from random import choice, randrange
 from turtle import *
+import math
 
 from freegames import floor, vector
 
@@ -35,6 +36,8 @@ for i in range(20):
         print(tiles[i])
 # fmt: on
 
+def distance(v1, v2):
+    return math.sqrt((v2.x - v1.x)**2 + (v2.y - v1.y)**2)
 
 def square(x, y):
     """Draw square using path at (x, y)."""
@@ -116,19 +119,33 @@ def move():
     dot(20, 'yellow')
 
     for point, course in ghosts:
+        """ 
+        si el fantasma se siguiera moviendo en la dirección a la que va seguiría estando en una 
+        posición válida?
+        
+        si sí síguete moviendo en esa dirección lol:
+        """
         if valid(point + course):
             point.move(course)
         else:
+            
+            # Si no, selecciona un cambio de dirección al azar:
             options = [
-                vector(5, 0),
-                vector(-5, 0),
-                vector(0, 5),
-                vector(0, -5),
+                vector(8, 0),
+                vector(-8, 0),
+                vector(0, 8),
+                vector(0, -8),
             ]
-            plan = choice(options)
-            course.x = plan.x
-            course.y = plan.y
-
+            best = vector(1000,1000)
+            for i in range(len(options)):
+                if (distance(point + options[i], pacman) < distance(point + best, pacman)) and valid(point + options[i]):
+                    best = options[i]
+            course.x = best.x
+            course.y = best.y
+            """
+            NOTA: 
+            ACÁ SÓLO SE SELECCIONA LA DIRECCIÓN, NO SE CAMBIA LA POSICIÓN, ESO SE HACE EN LA SIGUIENTE ITERACIÓN
+            """
         up()
         goto(point.x + 10, point.y + 10)
         dot(20, 'red')
@@ -139,7 +156,7 @@ def move():
         if abs(pacman - point) < 20:
             return
 
-    ontimer(move, 100)
+    ontimer(move, 30)
 
 
 def change(x, y):
@@ -156,10 +173,13 @@ writer.goto(160, 160)
 writer.color('white')
 writer.write(state['score'])
 listen()
-onkey(lambda: change(5, 0), 'Right')
-onkey(lambda: change(-5, 0), 'Left')
-onkey(lambda: change(0, 5), 'Up')
-onkey(lambda: change(0, -5), 'Down')
+onkey(lambda: change(8, 0), 'Right')
+onkey(lambda: change(-8, 0), 'Left')
+onkey(lambda: change(0, 8), 'Up')
+onkey(lambda: change(0, -8), 'Down')
 world()
 move()
 done()
+
+
+# TEST BRANCH ALONSO
