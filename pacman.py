@@ -151,17 +151,10 @@ def move():
                 vector(0, 5),
                 vector(0, -5),
             ]
-            # plan = choice(options)
-            # print(pacman.x, pacman.y, "|", point + plan)
             best = vector(1000,1000)
             for i in range(len(options)):
-                print(point + options[i], pacman)
                 if (distance(point + options[i], pacman) < distance(point + best, pacman)) and valid(point + options[i]):
                     best = options[i]
-            print(best)
-            
-            print("-----------------------")
-            
             course.x = best.x
             course.y = best.y
             """
