@@ -146,10 +146,10 @@ def move():
             
             # Si no, selecciona un cambio de dirección al azar:
             options = [
-                vector(5, 0),
-                vector(-5, 0),
-                vector(0, 5),
-                vector(0, -5),
+                vector(8, 0),
+                vector(-8, 0),
+                vector(0, 8),
+                vector(0, -8),
             ]
             best = vector(1000,1000)
             for i in range(len(options)):
@@ -171,7 +171,7 @@ def move():
         if abs(pacman - point) < 20:
             return
 
-    ontimer(move, 100)
+    ontimer(move, 30)
 
 
 def change(x, y):
@@ -188,10 +188,10 @@ writer.goto(160, 160)
 writer.color('white')
 writer.write(state['score'])
 listen()
-onkey(lambda: change(5, 0), 'Right')
-onkey(lambda: change(-5, 0), 'Left')
-onkey(lambda: change(0, 5), 'Up')
-onkey(lambda: change(0, -5), 'Down')
+onkey(lambda: change(8, 0), 'Right')
+onkey(lambda: change(-8, 0), 'Left')
+onkey(lambda: change(0, 8), 'Up')
+onkey(lambda: change(0, -8), 'Down')
 world()
 move()
 done()
