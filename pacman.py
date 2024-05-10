@@ -131,9 +131,17 @@ def move():
     dot(20, 'yellow')
 
     for point, course in ghosts:
+        """ 
+        si el fantasma se siguiera moviendo en la dirección a la que va seguiría estando en una 
+        posición válida?
+        
+        si sí síguete moviendo en esa dirección lol:
+        """
         if valid(point + course):
             point.move(course)
         else:
+            
+            # Si no, selecciona un cambio de dirección al azar:
             options = [
                 vector(5, 0),
                 vector(-5, 0),
@@ -143,7 +151,10 @@ def move():
             plan = choice(options)
             course.x = plan.x
             course.y = plan.y
-
+            """
+            NOTA: 
+            ACÁ SÓLO SE SELECCIONA LA DIRECCIÓN, NO SE CAMBIA LA POSICIÓN, ESO SE HACE EN LA SIGUIENTE ITERACIÓN
+            """
         up()
         goto(point.x + 10, point.y + 10)
         dot(20, 'red')
